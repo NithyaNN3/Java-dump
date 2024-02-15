@@ -1,4 +1,4 @@
-## Wordle mock up 
+## Wordle mock up
 
 
 > Iteration 1: Get word from a game setter -> get the player to words 6 times trying to guess the final word
