@@ -29,7 +29,18 @@ public class InputArray {
                 System.out.println("You've got it!");
                 break;
             } else {
-                System.out.println("Not the word!");
+                // Compare two arrays element by element
+                for (int j = 0; j < wordArray.length; j++) {
+                    for (int k = 0; k < guessArray.length; k++){
+                        if (wordArray[j] == guessArray[k]) {
+                            if (j==k) {
+                                System.out.println(guessArray[k] + " is in the word at position" + j);
+                            } else {
+                                System.out.println(guessArray[k] + " is in the word but not in this position");
+                            }
+                        }
+                    }
+                }
                 continue;
             }
         }
