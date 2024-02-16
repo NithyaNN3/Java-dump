@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class InputArray {
     public static void main(String[] args) {
@@ -12,10 +13,23 @@ public class InputArray {
             wordArray[i] = word.charAt(i);
         }
 
-        System.out.println("Word stored in array: ");
+        System.out.println("Enter your guess: ");
 
-        for (int i = 0; i < wordArray.length; i++) {
-            System.out.println(wordArray[i]);
+        String userGuess = scanner.nextLine();
+        char[] guessArray = new char[userGuess.length()];
+
+        for (int i = 0; i < userGuess.length(); i++) {
+            guessArray[i] = userGuess.charAt(i);
         }
+
+        boolean areEqual = Arrays.equals(wordArray, guessArray);
+
+        for (int i = 0; i < 5; i++) {
+            if (areEqual) {
+                System.out.println("You've got it!");
+                break;
+            } else {
+                System.out.println("This is not the word");
+            }
     }
 }
