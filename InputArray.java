@@ -1,31 +1,30 @@
 import java.util.Scanner;
 import java.util.Arrays;
 
-// Method: Get user guess (make sure to sanitise guess input)
-// Method: Check guess
-// Method: Display guess feedback
 // Every file, class and method should have documentation using the JavaDoc format
 // Get a windows app version 
 // Move print statements to debug statements, which are only printed if run with a --debug or -d flag. Create a Logger class.
+/**
+ * Public class to mock-up a game of Wordle
+ */
 public class InputArray {
     private boolean debug;
     
     public void Logger(boolean debug) {
+        // fetches the debug flag
         this.debug = debug;
     }
 
     public void log(String message) {
+        // Prints the log message
         if (debug) {
             System.out.println(message);
         }
     }
 
-    /* checkGuess
-     * @secret: Word of the day that user needs to guess
-     * @guess: Word provided by user
-     * @output:
+    /**
+     * @return - sanitised word of the day
      */
-
     private String wordOfTheDay() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the word of the day: ");
@@ -34,15 +33,25 @@ public class InputArray {
 
         return word.trim();
     }
-
+    /**
+     * @return - checks word of the day character limit
+     */
     private boolean isFiveLetters(String word) {
         return word.length() == 5;
     }
 
+    /**
+     * @param word word of the day
+     * @return whether the word of the day has numbers or not
+     */
     private boolean containsNumbers(String word) {
         return word.matches(".*\\d.*"); // Checks if the word contains any digit
     }
 
+    /**
+     * Fetches user guess
+     * @return user guess
+     */
     private String fetchGuess() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your guess: ");
@@ -52,6 +61,12 @@ public class InputArray {
         return userGuess.trim();
     }
 
+    /**
+     * Checks if a character is present in the same position in both words, different positions or if a character in the guess word
+     * doesn't exist in the original word
+     * @param word - sanitised word of the day
+     * @param userGuess - sanitised recent user guess
+     */
     private void checkGuess(String word, String userGuess) {
         int i;
         int j;
@@ -87,7 +102,10 @@ public class InputArray {
             }
         }
         
-
+    /**
+     * Is the main entry point for the code 
+     * @param args
+     */
     public static void main(String[] args) {
         InputArray obj = new InputArray();
         String word;
@@ -113,46 +131,4 @@ public class InputArray {
         } while (count < 5);
         
     }
-
-
-
-
-
-        // for (int i = 0; i < word.length(); i++) {
-        //     wordArray[i] = word.charAt(i);
-        // }   
-
-        // for (int i = 0; i < 5; i++) {
-        //     System.out.println("Enter your guess: ");
-
-        //     String userGuess = scanner.nextLine();
-        //     char[] guessArray = new char[userGuess.length()];
-
-        //     for (int j = 0; j < userGuess.length(); j++) {
-        //         guessArray[j] = userGuess.charAt(j);
-        //     }
-
-        //     boolean areEqual = Arrays.equals(wordArray, guessArray);
-
-        //     if (areEqual) {
-        //         System.out.println("You've got it!");
-        //         // Log.debug("You've got it!");
-        //         break;
-        //     } else {
-        //         // Compare two arrays element by element
-        //         for (int j = 0; j < wordArray.length; j++) {
-        //             for (int k = 0; k < guessArray.length; k++){
-        //                 if (wordArray[j] == guessArray[k]) {
-        //                     if (j==k) {
-        //                         System.out.println(guessArray[k] + " is in the word at position" + j);
-        //                     } else {
-        //                         System.out.println(guessArray[k] + " is in the word but not in this position");
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //         continue;
-        //     }
-        // }
-    
 }
