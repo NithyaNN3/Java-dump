@@ -1,9 +1,8 @@
 import java.util.Scanner;
-import java.util.Arrays;
+// import javafx.application.Application;
 
-// Every file, class and method should have documentation using the JavaDoc format
 // Get a windows app version 
-// Move print statements to debug statements, which are only printed if run with a --debug or -d flag. Create a Logger class.
+
 /**
  * Public class to mock-up a game of Wordle
  */
@@ -70,52 +69,57 @@ public class InputArray {
     private void checkGuess(String word, String userGuess) {
         int i;
         int j;
+        int correctPositions = 0;
 
         for (i = 0; i < word.length(); i++) {
             char currentChar = word.charAt(i);
+            char currentGuessChar = userGuess.charAt(i); // Get the character at the same position in userGuess
             boolean charFound = false;
-            boolean samePosition = false;
 
-            for (j = 0; j < userGuess.length(); j++) {
-                char currentGuessChar = userGuess.charAt(j);
-                // logger.log("Comparing the guess with the word");
-                if (currentGuessChar == currentChar) {
-                    
-                    charFound = true;
-
-                    if (i == j) {
-                        samePosition = true; // Character found in the same position
+            if (currentGuessChar == currentChar) {
+                System.out.println(currentGuessChar + " is in the right position");
+                correctPositions++;
+            } else {
+                // Check if the character exists in other positions of word
+                for (j = 0; j < word.length(); j++) {
+                    if (j != i && word.charAt(j) == currentGuessChar) {
+                        // Character found in word but in the wrong position
+                        System.out.println(currentGuessChar + " is in the word but in the wrong position");
+                        charFound = true;
+                        break;
                     }
                 }
-            }
-                
-            if (charFound && samePosition) {
-                // Character is in the same position in userGuess
-                System.out.println(currentChar + " is in the right position");
-            } else if (charFound && !samePosition) {
-                // Character found in userGuess but at a different position
-                System.out.println(currentChar + " is present in userGuess but at a different position");
-            } else {
-                // Character not present in word
-                System.out.println(currentChar + " does not exist");
-            }
-            }
+                // If character not found in other positions, it doesn't exist in word
+                if (!charFound) {
+                    System.out.println(currentGuessChar + " does not exist");
+                }
         }
-        
+    }
+        // Check if all characters are in the right position
+        if (correctPositions == word.length()) {
+            System.out.println("You've got it!");
+            System.exit(0);
+        }
+    }
     /**
      * Is the main entry point for the code 
      * @param args
      */
     public static void main(String[] args) {
+        boolean debugMode = false;
+        if (args.length > 0 && (args[0].equals("-debug") || args[0].equals("--d"))) {
+            debugMode = true;
+        }
         InputArray obj = new InputArray();
         String word;
+        String userGuess;
         int count = 0;
 
-        obj.Logger(true);
         obj.log("Entry point");
 
         do {
             word = obj.wordOfTheDay();
+            obj.log("Word of the day: " + word);
 
             if (!obj.isFiveLetters(word)) {
                 System.out.println("The word entered is not five letters long. Please enter again.");
@@ -125,9 +129,20 @@ public class InputArray {
         } while (!obj.isFiveLetters(word) || obj.containsNumbers(word));
 
         do {
-            String userGuess = obj.fetchGuess();
-            obj.checkGuess(word, userGuess);
+            userGuess = obj.fetchGuess();
+            obj.log("User guess: " + userGuess);
 
+            if (!obj.isFiveLetters(userGuess)) {
+                System.out.println("The word entered is not five letters long. Please enter again.");
+            } else if (obj.containsNumbers(userGuess)) {
+                System.out.println("The word entered contains numbers. Please enter again.");
+            }
+            
+        } while (!obj.isFiveLetters(userGuess) || obj.containsNumbers(userGuess));
+
+        do {
+            obj.checkGuess(word, userGuess);
+            count++;
         } while (count < 5);
         
     }
