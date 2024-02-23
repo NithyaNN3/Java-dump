@@ -1,6 +1,6 @@
 import java.util.Scanner;
 import java.util.Arrays;
-// Method: Set secret word (make sure to sanitise input)
+
 // Method: Get user guess (make sure to sanitise guess input)
 // Method: Check guess
 // Method: Display guess feedback
@@ -43,20 +43,55 @@ public class InputArray {
         return word.matches(".*\\d.*"); // Checks if the word contains any digit
     }
 
+    private String fetchGuess() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter your guess: ");
 
-    // private void checkGuess(String secret, String guess) {
-    //     /*/ All comparison logic goes here
-    //     for (i = 0; i < secret.length(); i++) {
-    //         for (j = 0; j < guess.length(); j++) {
-    //             // Logic
-    //         }
-    //     }
-    //     //*/
-    // }
+        String userGuess = scanner.nextLine();
+
+        return userGuess;
+    }
+
+    private void checkGuess(String word, String userGuess) {
+        int i;
+        int j;
+
+        for (i = 0; i < word.length(); i++) {
+            char currentChar = word.charAt(i);
+            boolean charFound = false;
+            boolean samePosition = false;
+
+            for (j = 0; j < userGuess.length(); j++) {
+                char currentGuessChar = userGuess.charAt(j);
+                // logger.log("Comparing the guess with the word");
+                if (currentGuessChar == currentChar) {
+                    
+                    charFound = true;
+
+                    if (i == j) {
+                        samePosition = true; // Character found in the same position
+                    }
+                }
+            }
+                
+            if (charFound && samePosition) {
+                // Character is in the same position in userGuess
+                System.out.println(currentChar + " is in the right position");
+            } else if (charFound && !samePosition) {
+                // Character found in userGuess but at a different position
+                System.out.println(currentChar + " is present in userGuess but at a different position");
+            } else {
+                // Character not present in word
+                System.out.println(currentChar + " does not exist");
+            }
+            }
+        }
+        
 
     public static void main(String[] args) {
         InputArray obj = new InputArray();
         String word;
+        int count = 0;
 
         obj.Logger(true);
         obj.log("Entry point");
@@ -70,6 +105,13 @@ public class InputArray {
                 System.out.println("The word entered contains numbers. Please enter again.");
             }
         } while (!obj.isFiveLetters(word) || obj.containsNumbers(word));
+
+        do {
+            String userGuess = obj.fetchGuess();
+            obj.checkGuess(word, userGuess);
+
+        } while (count < 5);
+        
     }
 
 
