@@ -32,7 +32,7 @@ public class InputArray {
 
         String word = scanner.nextLine();
 
-        return word;
+        return word.trim();
     }
 
     private boolean isFiveLetters(String word) {
@@ -49,7 +49,7 @@ public class InputArray {
 
         String userGuess = scanner.nextLine();
 
-        return userGuess;
+        return userGuess.trim();
     }
 
     private void checkGuess(String word, String userGuess) {
