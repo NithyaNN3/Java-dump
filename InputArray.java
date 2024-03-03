@@ -117,33 +117,42 @@ public class InputArray {
 
         obj.log("Entry point");
 
-        do {
-            word = obj.wordOfTheDay();
-            obj.log("Word of the day: " + word);
+        for (int i = 0; i < 5; i++){
+            do {
+                word = obj.wordOfTheDay();
+                obj.log("Word of the day: " + word);
 
-            if (!obj.isFiveLetters(word)) {
-                System.out.println("The word entered is not five letters long. Please enter again.");
-            } else if (obj.containsNumbers(word)) {
-                System.out.println("The word entered contains numbers. Please enter again.");
-            }
-        } while (!obj.isFiveLetters(word) || obj.containsNumbers(word));
+                if (!obj.isFiveLetters(word)) {
+                    System.out.println("The word entered is not five letters long. Please enter again.");
+                } else if (obj.containsNumbers(word)) {
+                    System.out.println("The word entered contains numbers. Please enter again.");
+                }
+            } while (!obj.isFiveLetters(word) || obj.containsNumbers(word));
 
-        do {
-            userGuess = obj.fetchGuess();
-            obj.log("User guess: " + userGuess);
+            do {
+                userGuess = obj.fetchGuess();
+                obj.log("User guess: " + userGuess);
 
-            if (!obj.isFiveLetters(userGuess)) {
-                System.out.println("The word entered is not five letters long. Please enter again.");
-            } else if (obj.containsNumbers(userGuess)) {
-                System.out.println("The word entered contains numbers. Please enter again.");
-            }
-            
-        } while (!obj.isFiveLetters(userGuess) || obj.containsNumbers(userGuess));
+                if (!obj.isFiveLetters(userGuess)) {
+                    System.out.println("The word entered is not five letters long. Please enter again.");
+                } else if (obj.containsNumbers(userGuess)) {
+                    System.out.println("The word entered contains numbers. Please enter again.");
+                }
+                
+            } while (!obj.isFiveLetters(userGuess) || obj.containsNumbers(userGuess));
 
-        do {
+            // Check guess here
             obj.checkGuess(word, userGuess);
             count++;
-        } while (count < 5);
-        
+
+            // If user guesses correctly, exit loop
+            if (obj.isFiveLetters(userGuess) && !obj.containsNumbers(userGuess)) {
+                break;
+            }
+        }
+
+        if (count == 5) {
+            System.out.println("You've run out of guesses!");
+        }
     }
 }
